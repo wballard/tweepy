@@ -109,7 +109,7 @@ class AsyncBaseClient(BaseClient):
             await session.close()
 
         if not 200 <= response.status < 300:
-            response_json = await response.json()
+            response_json = await response.json(content_type=None)
         if response.status == 400:
             raise BadRequest(response, response_json=response_json)
         if response.status == 401:
@@ -150,7 +150,7 @@ class AsyncBaseClient(BaseClient):
         if self.return_type is aiohttp.ClientResponse:
             return response
 
-        response = await response.json()
+        response = await response.json(content_type=None)
 
         if self.return_type is dict:
             return response
